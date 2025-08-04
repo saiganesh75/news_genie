@@ -1,0 +1,483 @@
+/* === 1. ROOT VARIABLES & THEME SETUP ======================================= */
+:root {
+    /* --- FONT FAMILIES --- */
+    --font-heading: 'Montserrat', sans-serif;
+    --font-body: 'Poppins', sans-serif;
+
+    /* --- LIGHT MODE THEME --- */
+    --light-bg-primary: #f4f7f9;
+    --light-bg-secondary: #ffffff;
+    --light-bg-tertiary: #eef2f5;
+    --light-text-primary: #2d3748;
+    --light-text-secondary: #718096;
+    --light-heading-color: #1a202c;
+    --light-border-color: #e2e8f0;
+    --light-shadow-color: rgba(45, 55, 72, 0.1);
+
+    /* --- DARK MODE THEME --- */
+    --dark-bg-primary: #12121a;
+    --dark-bg-secondary: #1a1a26;
+    --dark-bg-tertiary: #242430;
+    --dark-text-primary: #a9b3c1;
+    --dark-text-secondary: #8a93a2;
+    --dark-heading-color: #e8ecf3;
+    --dark-border-color: #333344;
+    --dark-shadow-color: rgba(0, 0, 0, 0.25);
+
+    /* --- ACCENT COLORS & GRADIENTS --- */
+    --accent-purple-start: #8360c3;
+    --accent-purple-end: #2ebf91;
+    --accent-blue-start: #4a90e2;
+    --accent-blue-end: #6dd5ed;
+    --accent-pink-start: #d4418e;
+    --accent-pink-end: #0652c5;
+    --accent-red: #e53e3e;
+    --accent-green: #38a169;
+    --accent-yellow: #d69e2e;
+
+    --gradient-primary: linear-gradient(135deg, var(--accent-purple-start) 0%, var(--accent-purple-end) 100%);
+    --gradient-secondary: linear-gradient(135deg, var(--accent-blue-start) 0%, var(--accent-blue-end) 100%);
+    --gradient-danger: linear-gradient(135deg, var(--accent-pink-start) 0%, var(--accent-pink-end) 100%);
+    --gradient-text: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+
+    /* --- SIZING & SPACING --- */
+    --border-radius-sm: 8px;
+    --border-radius-md: 12px;
+    --border-radius-lg: 20px;
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    --spacing-xxl: 48px;
+
+    /* --- TRANSITIONS --- */
+    --transition-fast: 0.15s ease-in-out;
+    --transition-normal: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    --transition-slow: 0.5s ease-in-out;
+}
+
+
+/* === 2. GLOBAL STYLES & RESETS ============================================ */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.7;
+    background-color: var(--light-bg-primary);
+    color: var(--light-text-primary);
+    transition: background-color var(--transition-normal), color var(--transition-normal);
+    position: relative;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(circle at 10% 20%, #e0e7ff, transparent 40%),
+                radial-gradient(circle at 90% 80%, #ffe0f0, transparent 40%);
+    opacity: 0.6;
+    transition: opacity var(--transition-slow);
+}
+
+/* --- DARK MODE STYLES --- */
+body.dark-mode {
+    background-color: var(--dark-bg-primary);
+    color: var(--dark-text-primary);
+}
+body.dark-mode::before {
+    background: radial-gradient(circle at 10% 20%, rgba(95, 114, 190, 0.2), transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(153, 33, 232, 0.15), transparent 40%);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--light-heading-color);
+    line-height: 1.3;
+    transition: color var(--transition-normal);
+}
+body.dark-mode h1, body.dark-mode h2, body.dark-mode h3, body.dark-mode h4, body.dark-mode h5, body.dark-mode h6 {
+    color: var(--dark-heading-color);
+}
+
+a {
+    color: var(--accent-purple-start);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+a:hover {
+    color: var(--accent-purple-end);
+    text-decoration: none;
+}
+body.dark-mode a {
+    color: var(--accent-blue-end);
+}
+body.dark-mode a:hover {
+    color: var(--accent-blue-start);
+}
+
+
+/* === 3. GENERAL-PURPOSE COMPONENTS ======================================== */
+.app-card {
+    background-color: var(--light-bg-secondary);
+    border-radius: var(--border-radius-lg);
+    box-shadow: 0 10px 40px -10px var(--light-shadow-color);
+    border: 1px solid var(--light-border-color);
+    transition: all var(--transition-normal);
+    padding: var(--spacing-xl);
+}
+body.dark-mode .app-card {
+    background-color: var(--dark-bg-secondary);
+    border-color: var(--dark-border-color);
+    box-shadow: 0 10px 40px -10px var(--dark-shadow-color);
+}
+
+.app-btn {
+    padding: 12px 28px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: var(--border-radius-md);
+    border: none;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.app-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px -8px rgba(0,0,0,0.25);
+}
+.app-btn.primary-btn {
+    background: var(--gradient-secondary);
+    color: white;
+}
+.app-btn.secondary-btn {
+    background: var(--gradient-primary);
+    color: white;
+}
+.app-btn.outline-btn {
+    background: transparent;
+    border: 2px solid var(--light-border-color);
+    color: var(--light-text-secondary);
+}
+.app-btn.outline-btn:hover {
+    background-color: var(--light-bg-tertiary);
+    border-color: var(--light-bg-tertiary);
+    color: var(--light-heading-color);
+}
+body.dark-mode .app-btn.outline-btn {
+    border-color: var(--dark-border-color);
+    color: var(--dark-text-secondary);
+}
+body.dark-mode .app-btn.outline-btn:hover {
+    background-color: var(--dark-bg-tertiary);
+    border-color: var(--dark-bg-tertiary);
+    color: var(--dark-heading-color);
+}
+
+
+/* === 4. NAVBAR & HEADER ================================================== */
+.app-navbar {
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: saturate(180%) blur(10px);
+    box-shadow: 0 4px 20px var(--light-shadow-color);
+    border-bottom: 1px solid var(--light-border-color);
+    transition: all var(--transition-normal);
+    padding: 1rem 0;
+}
+body.dark-mode .app-navbar {
+    background-color: rgba(26, 26, 38, 0.8) !important;
+    border-bottom-color: var(--dark-border-color);
+    box-shadow: 0 4px 20px var(--dark-shadow-color);
+}
+/* ... other navbar styles ... */
+.app-dropdown-menu {
+    border: 1px solid var(--light-border-color);
+    box-shadow: 0 10px 30px -5px var(--light-shadow-color);
+    border-radius: var(--border-radius-md);
+    background-color: var(--light-bg-secondary);
+    min-width: 16rem;
+    margin-top: 12px !important;
+    padding: var(--spacing-sm) 0;
+    overflow: hidden;
+}
+body.dark-mode .app-dropdown-menu {
+    border-color: var(--dark-border-color);
+    box-shadow: 0 10px 30px -5px var(--dark-shadow-color);
+    background-color: var(--dark-bg-secondary);
+}
+
+
+/* === 5. ARTICLE CARD STYLES (DEFINITIVE ALIGNMENT FIX) =================== */
+.article-card {
+    border-width: 1px;
+    display: flex;
+    flex-direction: column;
+}
+.article-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 50px -12px var(--light-shadow-color);
+    border-color: var(--accent-purple-start);
+}
+body.dark-mode .article-card:hover {
+    box-shadow: 0 25px 50px -12px var(--dark-shadow-color);
+    border-color: var(--accent-blue-end);
+}
+
+.card-title-article {
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.card-meta-info {
+    font-size: 0.85rem;
+    color: var(--light-text-secondary);
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px; /* Adds a small gap if they wrap on tiny screens */
+}
+
+.reading-time {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px; /* Space between icon and text */
+}
+
+body.dark-mode .card-meta-info {
+    color: var(--dark-text-secondary);
+}
+
+.card-text-summary {
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    flex-grow: 1; /* This is the key alignment fix */
+}
+
+.article-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid var(--light-border-color);
+}
+body.dark-mode .article-actions {
+    border-top-color: var(--dark-border-color);
+}
+
+.read-more-btn {
+    background: var(--gradient-primary);
+    color: white;
+}
+.button-group-actions .icon-btn {
+    background-color: var(--light-bg-tertiary) !important;
+    color: var(--light-text-secondary) !important;
+    border: 1px solid var(--light-border-color);
+    padding: 8px 12px;
+    font-size: 1rem;
+    border-radius: var(--border-radius-md);
+}
+body.dark-mode .button-group-actions .icon-btn {
+    background-color: var(--dark-bg-tertiary) !important;
+    color: var(--dark-text-secondary) !important;
+    border-color: var(--dark-border-color);
+}
+
+.button-group-actions .icon-btn:hover {
+    border-color: var(--accent-purple-start);
+    color: var(--accent-purple-start) !important;
+    transform: translateY(-2px);
+}
+body.dark-mode .button-group-actions .icon-btn:hover {
+    border-color: var(--accent-blue-end);
+    color: var(--accent-blue-end) !important;
+}
+
+.icon-btn.liked, .icon-btn.bookmarked {
+    background: var(--gradient-primary) !important;
+    color: white !important;
+    border-color: transparent !important;
+}
+body.dark-mode .icon-btn.liked, body.dark-mode .icon-btn.bookmarked {
+    background: var(--gradient-secondary) !important;
+}
+
+
+/* === 6. USER PREFERENCES PAGE (DEFINITIVE FIX) ============================ */
+.preference-grid-container {
+    padding: 20px 0;
+}
+.preference-card-label {
+    display: block;
+    cursor: pointer;
+    user-select: none;
+}
+.preference-card-label input[type="checkbox"] {
+    display: none;
+}
+.preference-card {
+    background-color: var(--light-bg-secondary);
+    border: 2px solid var(--light-border-color);
+    border-radius: var(--border-radius-lg);
+    padding: 20px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all var(--transition-normal);
+}
+.preference-card-text {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 1.4rem;
+    color: var(--light-text-secondary);
+    transition: all var(--transition-normal);
+}
+.checkmark-overlay {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-size: 1.8rem;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all var(--transition-normal);
+}
+
+/* --- Light Mode States --- */
+.preference-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-purple-start);
+}
+.preference-card-label input[type="checkbox"]:checked + .preference-card {
+    border-color: var(--accent-purple-end);
+    background-color: #f5f3ff; /* Light purple highlight */
+}
+.preference-card-label input[type="checkbox"]:checked + .preference-card .preference-card-text {
+    color: var(--accent-purple-start);
+}
+.preference-card-label input[type="checkbox"]:checked + .preference-card .checkmark-overlay {
+    opacity: 1;
+    transform: scale(1);
+    color: var(--accent-green);
+}
+
+/* --- Dark Mode States (FIXED) --- */
+body.dark-mode .preference-card {
+    background-color: var(--dark-bg-tertiary);
+    border-color: var(--dark-border-color);
+}
+body.dark-mode .preference-card-text {
+    color: var(--dark-text-secondary);
+}
+body.dark-mode .preference-card:hover {
+    border-color: var(--accent-blue-start);
+}
+body.dark-mode .preference-card-label input[type="checkbox"]:checked + .preference-card {
+    border-color: var(--accent-blue-end);
+    background-color: var(--dark-bg-secondary);
+}
+body.dark-mode .preference-card-label input[type="checkbox"]:checked + .preference-card .preference-card-text {
+    color: var(--accent-blue-end);
+}
+body.dark-mode .preference-card-label input[type="checkbox"]:checked + .preference-card .checkmark-overlay {
+    opacity: 1;
+    transform: scale(1);
+    color: var(--accent-blue-end);
+}
+
+/* === 7. FILTER & FORM STYLES ============================================= */
+.form-label-custom {
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+}
+.app-input-field, .form-select.app-input-field {
+    border-radius: var(--border-radius-md);
+    border: 1px solid var(--light-border-color);
+    padding: 12px 18px;
+    font-size: 1rem;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.03);
+    transition: all var(--transition-fast);
+    background-color: var(--light-bg-tertiary);
+    color: var(--light-text-primary);
+}
+.app-input-field:focus, .form-select.app-input-field:focus {
+    border-color: var(--accent-purple-start);
+    box-shadow: 0 0 0 3px rgba(131, 96, 195, 0.25);
+    background-color: var(--light-bg-secondary);
+    outline: none;
+}
+body.dark-mode .app-input-field, body.dark-mode .form-select.app-input-field {
+    background-color: var(--dark-bg-tertiary);
+    border-color: var(--dark-border-color);
+    color: var(--dark-text-primary);
+}
+body.dark-mode .app-input-field:focus, body.dark-mode .form-select.app-input-field:focus {
+    border-color: var(--accent-blue-end);
+    box-shadow: 0 0 0 3px rgba(109, 213, 237, 0.25);
+    background-color: var(--dark-bg-secondary);
+}
+
+/* === 8. ADMIN DASHBOARD THEME ============================================ */
+body.dark-mode #content-main .module {
+    background: var(--dark-bg-secondary);
+    border: 1px solid var(--dark-border-color);
+}
+body.dark-mode #changelist-filter h2 {
+    color: var(--dark-heading-color);
+    background: var(--dark-bg-tertiary);
+    border-bottom: 1px solid var(--dark-border-color);
+}
+body.dark-mode .metric-card,
+body.dark-mode .dashboard-list-card {
+    background-color: var(--dark-bg-tertiary);
+    border-color: var(--dark-border-color);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+body.dark-mode .metric-card h3,
+body.dark-mode .dashboard-list-card h3 {
+    color: var(--dark-heading-color);
+}
+body.dark-mode .dashboard-list-card h3 {
+    border-bottom-color: var(--dark-border-color);
+}
+body.dark-mode .dashboard-list-card ul li {
+    border-bottom-color: var(--dark-border-color);
+    color: var(--dark-text-primary);
+}
+body.dark-mode .dashboard-list-card ul li span {
+    color: var(--dark-heading-color);
+    background-color: var(--dark-bg-primary);
+}
+body.dark-mode .dashboard-list-card ul li a {
+    color: var(--accent-blue-end);
+}
+body.dark-mode .dashboard-list-card p {
+    color: var(--dark-text-secondary);
+}
+body.dark-mode .metric-card p.metric-value { color: var(--accent-blue-end); }
+body.dark-mode .metric-card.approved p.metric-value { color: var(--accent-green); }
+body.dark-mode .metric-card.pending p.metric-value { color: var(--accent-yellow); }
